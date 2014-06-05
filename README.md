@@ -11,12 +11,21 @@ Scrapes usually about ~700 unique proxies from:
 * checkerproxy.com
 * letushide.com
 
-Example:
+Usage
 ------
 
-```P = find_http_proxy(1)```
+```
+P = find_http_proxy(5)
+proxies = P.run()
+```
+Would create a list of the 5 fastest proxies within the variable
 
-```resp = requests.get('http://danmcinerney.org', proxies={'http':'http://'+P.run()[0]})```
+
+
+```
+P = find_http_proxy(1)
+resp = requests.get('http://danmcinerney.org', proxies={'http':'http://'+P.run()[0]})
+```
 
 Would create a response object that was fetched using the single fastest http proxy
 this script could find.
