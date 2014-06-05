@@ -203,7 +203,6 @@ class find_http_proxy:
                 error = True
                 results.append((error, proxy, url))
 
-        embed() ###########################3
         proxy = self.proxy_tests(results)
         if proxy:
             self.final_proxies.append(proxy)
@@ -250,13 +249,14 @@ class find_http_proxy:
         ''' Sees if the proxy passes all the tests and limits the results '''
         for r in results:
             error = r[0]
-            proxy = r[1]
             if error == True:
                return
+            proxy = r[1]
+
         return proxy
 
 # How to run:
+print 'Fetching the fastest 4 proxies...'
 P = find_http_proxy(4)
-proxies = P.run()
-
-print 'FINAL PROXIES:', proxies
+prox = P.run()
+print 'Fastest L1 proxies:', prox
