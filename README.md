@@ -2,14 +2,14 @@ get_proxy
 =========
 
 
-Python class for returning a list of valid elite anonymity proxies with the fastest
-one first. Can be run on it's own, but was created with the intention of placing inside
-other scripts. Give the class the number of proxies you want returned as an argument.
+Python class for returning a list of valid elite anonymity proxies with the fastest one first. Can be run on it's own, but was created with the intention of placing inside other scripts. Give the class the number of proxies you want returned as an argument.
 
 Scrapes usually about ~700 unique proxies from:
 * gatherproxy.com
 * checkerproxy.net
 * letushide.com
+
+Tests each proxy against 2 HTTP links that confirm the IP, one HTTPS link that confirms IP, and one site which returns the headers to confirm lack of proxy-identifying headers.
 
 Usage
 ------
