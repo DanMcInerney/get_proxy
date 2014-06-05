@@ -9,7 +9,7 @@ Scrapes usually about ~700 unique proxies from:
 * checkerproxy.net
 * letushide.com
 
-Tests each proxy against 2 HTTP links that confirm the IP, one HTTPS link that confirms IP, and one site which returns the headers to confirm lack of proxy-identifying headers.
+Tests each proxy against 2 HTTP links that confirm the IP, 1 HTTPS link that confirms IP, and 1 site which reflects the headers sent by the proxy to confirm the highest anonymity status.
 
 Usage
 ------
