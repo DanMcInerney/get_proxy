@@ -29,3 +29,10 @@ resp = requests.get('http://danmcinerney.org', proxies={'http':'http://'+P.run()
 
 Would create a response object that was fetched using the single fastest http proxy
 this script could find.
+
+
+### One liner to open Chrome using the fastest proxy found
+```
+google-chrome --proxy-server=`python -c 'import get_proxy; p = get_proxy.find_http_proxy(1); print p.run()[0]'`
+```
+Close out of any other instances of Chrome you have open. Navigate to your the directory of get_proxy.py then run this command to open a new Chrome window that is making all connections through the fastest proxy the script could find. No-hassle anonymity.

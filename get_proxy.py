@@ -256,7 +256,7 @@ class find_http_proxy:
         return proxy
 
 # How to run:
-print 'Fetching the fastest 4 proxies...'
-P = find_http_proxy(4)
-prox = P.run()
-print 'Fastest L1 proxies:', prox
+#print 'Fetching the fastest 4 proxies...'
+#P = find_http_proxy(4)
+#prox = P.run()
+#print 'Fastest L1 proxies:', prox
