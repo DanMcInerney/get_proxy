@@ -8,7 +8,7 @@ other scripts. Give the class the number of proxies you want returned as an argu
 
 Scrapes usually about ~700 unique proxies from:
 * gatherproxy.com
-* checkerproxy.com
+* checkerproxy.net
 * letushide.com
 
 Usage
