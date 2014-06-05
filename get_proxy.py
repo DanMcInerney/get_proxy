@@ -28,27 +28,26 @@ class find_http_proxy:
     that you are using a proxy at all '''
 
     def __init__(self, num_of_proxies):
-        #ua = 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/33.0.1750.154 Safari/537.36'
+        ua = 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/33.0.1750.154 Safari/537.36'
         self.proxy_list = []
-        #self.headers = {'User-Agent':ua}
-        self.headers = {'User-Agent':'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/33.0.1750.154 Safari/537.36'}
+        self.headers = {'User-Agent':ua}
         self.show_num = num_of_proxies
         self.externalip = self.external_ip()
         self.final_proxies = []
 
     def external_ip(self):
         ''' Get the accurate, non-proxied IP '''
-        req = requests.get('http://myip.dnsdynamic.org/', headers=self.headers)
-        ip = req.text
+        resp = requests.get('http://myip.dnsdynamic.org/', headers=self.headers)
+        ip = resp.text
         return ip
 
     def run(self):
         ''' Gets raw high anonymity (L1) proxy data then calls make_proxy_list()
         Currently parses data from gatherproxy.com and letushide.com '''
 
-        letushide_list = self.letushide_req()
-        gatherproxy_list = self.gatherproxy_req()
-        checkerproxy_list = self.checkerproxy_req()
+        letushide_list = self.letushide_resp()
+        gatherproxy_list = self.gatherproxy_resp()
+        checkerproxy_list = self.checkerproxy_resp()
 
         self.proxy_list.append(letushide_list)
         self.proxy_list.append(gatherproxy_list)
@@ -60,7 +59,7 @@ class find_http_proxy:
 
         return self.proxy_checker()
 
-    def checkerproxy_req(self):
+    def checkerproxy_resp(self):
         ''' Make the request to checkerproxy and create a master list from that site '''
         cp_ips = []
         try:
@@ -99,7 +98,7 @@ class find_http_proxy:
                         break
         return ips
 
-    def letushide_req(self):
+    def letushide_resp(self):
         ''' Make the request to the proxy site and create a master list from that site '''
         letushide_ips = []
         for i in xrange(1,20): # can search maximum of 20 pages
@@ -136,7 +135,7 @@ class find_http_proxy:
             ips.append(str(ip))
         return ips
 
-    def gatherproxy_req(self):
+    def gatherproxy_resp(self):
         url = 'http://gatherproxy.com/proxylist/anonymity/?t=Elite'
         try:
             r = requests.get(url, headers = self.headers)
@@ -165,7 +164,7 @@ class find_http_proxy:
 
     def proxy_checker(self):
         ''' Concurrency stuff here '''
-        jobs = [gevent.spawn(self.proxy_checker_req, proxy) for proxy in self.proxy_list]
+        jobs = [gevent.spawn(self.proxy_checker_resp, proxy) for proxy in self.proxy_list]
         try:
             while 1:
                 gevent.sleep(1)
@@ -176,8 +175,8 @@ class find_http_proxy:
             sys.exit('[-] Ctrl-C caught, exiting')
         return self.final_proxies[:self.show_num]
 
-    def proxy_checker_req(self, proxy):
-        ''' See how long each proxy takes to open each URL '''
+    def proxy_checker_resp(self, proxy):
+        ''' Run 4 web tests on each proxy IP:port and collect the results '''
         proxyip = str(proxy.split(':', 1)[0])
 
         results = []
