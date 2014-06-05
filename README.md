@@ -6,6 +6,11 @@ Python class for returning a list of valid elite anonymity proxies with the fast
 one first. Can be run on it's own, but was created with the intention of placing inside
 other scripts. Give the class the number of proxies you want returned as an argument.
 
+Scrapes usually about 700 proxies from:
+*gatherproxy.com
+*checkerproxy.com
+*letushide.com
+
 Example:
 
 
