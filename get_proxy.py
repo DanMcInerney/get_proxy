@@ -15,6 +15,7 @@ this script could find amongst the 600+ it tests in parallel'''
 from gevent import monkey
 monkey.patch_all()
 
+from IPython import embed
 import requests
 import ast
 import gevent
@@ -173,6 +174,7 @@ class find_http_proxy:
                     break
         except KeyboardInterrupt:
             sys.exit('[-] Ctrl-C caught, exiting')
+
         return self.final_proxies[:self.show_num]
 
     def proxy_checker_resp(self, proxy):
@@ -201,7 +203,10 @@ class find_http_proxy:
                 error = True
                 results.append((error, proxy, url))
 
-        self.proxy_tests(results)
+        embed() ###########################3
+        proxy = self.proxy_tests(results)
+        if proxy:
+            self.final_proxies.append(proxy)
 
     def html_handler(self, html, url):
         ''' Check the html for errors and if none are found return time to load page '''
@@ -248,10 +253,10 @@ class find_http_proxy:
             proxy = r[1]
             if error == True:
                return
-        self.final_proxies.append(proxy)
+        return proxy
 
 # How to run:
-P = find_http_proxy(15)
+P = find_http_proxy(4)
 proxies = P.run()
 
 print 'FINAL PROXIES:', proxies
