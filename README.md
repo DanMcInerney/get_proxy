@@ -9,6 +9,7 @@ other scripts. Give the class the number of proxies you want returned as an argu
 Example:
 
 ```P = find_http_proxy(1)```
+
 ```res = requests.get('http://danmcinerney.org', proxies={'http':'http://'+P.run()})```
 
 Would create a response object that was fetched using the single fastest http proxy
