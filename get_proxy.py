@@ -15,7 +15,6 @@ this script could find amongst the 600+ it tests in parallel'''
 from gevent import monkey
 monkey.patch_all()
 
-from IPython import embed
 import requests
 import ast
 import gevent
